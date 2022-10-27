@@ -1,4 +1,4 @@
-<div [hidden]="isAddNew">
+<!-- <div [hidden]="isAddNew">
     <h1>Customer List</h1>
     <input type="button" value="Add New" (click)="addNew()">
     <table border="1">
@@ -23,4 +23,62 @@
     <span [hidden]="!(F.dirty && F.errors?.['minlength'])">Minimum 3 characters needed for Last Name</span> <br><br>
     <input type="button" value="Save" (click)="save()" [disabled]="myForm.invalid"> &nbsp;
     <input type="button" value="Cancel" (click)="cancel()">
+</div> -->
+
+<div class="container-fluid pt-3">
+    <div class="card" [hidden]="isAddNew">
+        <h5 class="card_header">Customer List</h5>
+        <div class="card-body">
+            <div class="card-title">
+                <i class="fas fa-user-plus"></i>
+                <input type="button" value="+ Add New" class="btn btn-primary fas fa-coffee fa-xs" (click)="addNew()">
+            </div>
+            <table class="table table-striped table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let customer of customers">
+                        <td scope="row">{{customer.firstName}}</td>
+                        <td>{{customer.lastName}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card" [hidden]="!isAddNew" ngForm #myForm="ngForm">
+        <h5 class="card-header">Add New Customer</h5>
+        <div class="card-body">
+            <div class="form-group">
+                <label for="firstName">First Name: </label>
+                <input type="text" class="form-control" [ngClass]="{'is-valid': F.valid, 'is-invalid': F.invalid}"
+                    name="firstName" [(ngModel)]="this.firstName" required minlength="3" #F="ngModel">
+                <div class="alert alert-danger" [hidden]="!(F.dirty && F.errors?.['required'])">
+                    Enter First Name
+                </div>
+                <div class="alert alert-danger" [hidden]="!(F.dirty && F.errors?.['minlength'])">
+                    Minimum 3 characters needed for First Name
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="lastName">Last Name: </label>
+                <input type="text" class="form-control" [ngClass]="{'is-valid': L.valid, 'is-invalid': L.invalid}"
+                    name="lastName" [(ngModel)]="this.lastName" required minlength="3" #L="ngModel">
+                <div class="alert alert-danger" [hidden]="!(L.dirty && L.errors?.['required'])">
+                    Enter Last Name
+                </div>
+                <div class="alert alert-danger" [hidden]="!(L.dirty && L.errors?.['minlength'])">
+                    Minimum 3 characters needed for Last Name
+                </div>
+            </div>
+            <input type="button" class="btn btn-success" value="Save" (click)="save()" [disabled]="myForm.invalid">
+            &nbsp;
+            <input type="button" value="Cancel" class="btn btn-danger" (click)="cancel()">
+        </div>
+    </div>
 </div>
